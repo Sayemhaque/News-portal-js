@@ -1,9 +1,13 @@
-
-function loadData () {
+const  loadData = () => {
     const URL = "https://openapi.programming-hero.com/api/news/categories";
     fetch(URL)
     .then(res => res.json())
-    .then(data => console.log(data.data))
+    .then(data => displayCetegories(data.data))
 }
 
-loadData()
+
+const displayCetegories = (data) => {
+  return console.log(data)
+}
+
+displayCetegories()
