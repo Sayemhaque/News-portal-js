@@ -25,6 +25,7 @@ const showAllNews = (data, category_name) => {
   console.log(category_name);
 };
 
+
 const displayCardUi = (data, category_name) => {
   const newsCardContainer = document.getElementById("all-news-container");
   document.getElementById("category-name-ui").innerText = category_name;
@@ -76,6 +77,7 @@ const displayCardUi = (data, category_name) => {
   });
   
 };
+
 
 
 
