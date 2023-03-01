@@ -31,15 +31,38 @@ const showAllNews = (data ,category_name) => {
        <div class="row g-0">
          <div class="col-md-4">
            <img src="${news.image_url
-           }" class="img-fluid rounded-start" alt="...">
+           }" class="img-fluid w-10 h-10 rounded-start" alt="...">
          </div>
          <div class="col-md-8 d-flex flex-column">
            <div class="card-body">
              <h5 class="card-title">${news.title}</h5>
              <p class="card-text">${news.details.slice(0 , 100)}...</p>
            </div>
+           
            <div class="card-footer border-0 bg-body">
-            <p class="card-text">ad</p>
+         <div class="d-flex justify-content-between align-items-center">
+           <div  class="d-flex gap-2">
+               <img src="${news.author.img
+               }" class="img-fluid rounded-circle" alt="..." height="30" width="40">
+               <div>
+               <p class="m-0 p-0">${news.author.name}</p>
+               <p class="m-0 p-0">${news.author.published_date}</p>
+               </div>
+               </div>
+               <!--  -->
+               <div class="d-flex justify-content-between align-items-center gap-2">
+               <i class=" m-0 p-0 fa fa-eye"></i>
+              <p class="m-0 p-0">${news.total_view}</p>
+               </div>
+               <!--  -->
+               <div>
+               <i class=" m-0 p-0 fa fa-star"></i>
+               </div>
+               <!--  -->
+               <div>
+               <i class=" m-0 p-0 fa fa-arrow-right"></i>
+               </div>
+         </div>
            </div>
          </div>
        </div>
