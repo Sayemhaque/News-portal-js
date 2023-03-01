@@ -13,46 +13,51 @@ const displayCetegories = (data) => {
   });
 };
 
-const fetchAllNews = (categoryId,category_name) => {
+const fetchAllNews = (categoryId, category_name) => {
   const URL = `https://openapi.programming-hero.com/api/news/category/${categoryId}`;
   fetch(URL)
     .then((res) => res.json())
-    .then((data) => showAllNews(data.data , category_name));
+    .then((data) => showAllNews(data.data, category_name));
 };
 
+const showAllNews = (data, category_name) => {
+  displayCardUi(data, category_name);
+  console.log(category_name);
+};
 
-const showAllNews = (data ,category_name) => {
-    const newsCardContainer = document.getElementById("all-news-container");
-    document.getElementById("category-name-ui").innerText = category_name;
-    document.getElementById("total-news").innerText = data.length;
-    newsCardContainer.innerHTML = ""
-    data.forEach((news) => {
-       newsCardContainer.innerHTML += ` <div class="card mb-3 mt-4 ">
+const displayCardUi = (data, category_name) => {
+  const newsCardContainer = document.getElementById("all-news-container");
+  document.getElementById("category-name-ui").innerText = category_name;
+  document.getElementById("total-news").innerText = data.length;
+  newsCardContainer.innerHTML = "";
+  data.forEach((news) => {
+    const { image_url, title, details, total_view, author, _id } = news;
+    newsCardContainer.innerHTML += ` <div class="card mb-3 mt-4 ">
        <div class="row g-0">
          <div class="col-md-4">
-           <img src="${news.image_url
-           }" class="img-fluid w-10 h-10 rounded-start" alt="...">
+           <img src="${image_url}" class="img-fluid w-10 h-10 rounded-start" alt="...">
          </div>
          <div class="col-md-8 d-flex flex-column">
            <div class="card-body">
-             <h5 class="card-title">${news.title}</h5>
-             <p class="card-text">${news.details.slice(0 , 100)}...</p>
+             <h5 class="card-title">${title}</h5>
+             <p class="card-text">${details.slice(0, 100)}...</p>
            </div>
            
            <div class="card-footer border-0 bg-body">
          <div class="d-flex justify-content-between align-items-center">
            <div  class="d-flex gap-2">
-               <img src="${news.author.img
+               <img src="${
+                 author.img
                }" class="img-fluid rounded-circle" alt="..." height="30" width="40">
                <div>
-               <p class="m-0 p-0">${news.author.name}</p>
-               <p class="m-0 p-0">${news.author.published_date}</p>
+               <p class="m-0 p-0">${author.name}</p>
+               <p class="m-0 p-0">${author.published_date}</p>
                </div>
                </div>
                <!--  -->
                <div class="d-flex justify-content-between align-items-center gap-2">
                <i class=" m-0 p-0 fa fa-eye"></i>
-              <p class="m-0 p-0">${news.total_view}</p>
+              <small class="m-0 p-0 text-muted">${total_view} views</small>
                </div>
                <!--  -->
                <div>
@@ -60,15 +65,42 @@ const showAllNews = (data ,category_name) => {
                </div>
                <!--  -->
                <div>
-               <i class=" m-0 p-0 fa fa-arrow-right"></i>
+               <i class=" m-0 p-0 fa fa-arrow-right" data-bs-toggle="modal" data-bs-target="#staticBackdrop" onclick="fetchNewsDetails('${_id}')"></i>
                </div>
          </div>
            </div>
          </div>
        </div>
-     </div>`
-   
-    })
-    console.log(category_name)
-}
+     </div>`;
+     console.log(news)
+  });
+  
+};
 
+
+
+const fetchNewsDetails = (newsId) => {
+      const URL = `https://openapi.programming-hero.com/api/news/${newsId}`;
+      fetch(URL)
+      .then(res => res.json())
+      .then(data => showNewsDetails(data.data))
+} 
+
+
+
+const showNewsDetails = (newsDetail) => {
+    const modelContainer = document.getElementById("modal-body")
+    const { image_url, title, details, total_view, author, _id } = newsDetail[0];
+    console.log(newsDetail)
+    modelContainer.innerHTML = `  <div class="d-flex flex-column">
+    <div >
+      <img src="${image_url}" class="img-fluid w-10 h-10 rounded-start" alt="...">
+    </div>
+    <div >
+      <div class="card-body mt-2">
+        <h5 class="card-title">${title}</h5>
+        <p class="card-text mt-2 text-muted">${details}</p>
+      </div>
+  </div>
+</div>`
+            }
